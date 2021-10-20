@@ -5,23 +5,24 @@ import FeedIcon from '@mui/icons-material/Feed';
 import PersonIcon from '@mui/icons-material/Person';
 
 
-const Sidebar = () => {
+const Sidebar = ({feedType, setFeedType}) => {
 
+  
   return (
     <MenuList>
-        <MenuItem>
+        <MenuItem onClick={() => setFeedType('My')} >
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>My Feed</ListItemText>
-        </MenuItem>
-        <MenuItem>
+        </MenuItem >
+        <MenuItem onClick={() => setFeedType('Timeline')}>
           <ListItemIcon>
             <FeedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>My Timeline</ListItemText>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => setFeedType('Global')}>
           <ListItemIcon>
             <GlobeIcon fontSize="small" />
           </ListItemIcon>
