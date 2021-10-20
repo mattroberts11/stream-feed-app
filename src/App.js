@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import { Container, CssBaseline, Grid } from '@mui/material';
+import Feed from './Feed';
+import Sidebar from './Sidebar';
+import TopNav from './TopNav';
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+    <CssBaseline>
+      <Container>
+        
+          <Grid container sx={{border: '3px solid green', marginTop: '1rem'}}>
+            <Grid item xs={12} sx={{padding: '1rem'}}> 
+              <TopNav />
+            </Grid>
+            <Grid item xs={4} sx={{border: '1px solid blue'}}>
+              <Sidebar />
+            </Grid>
+            <Grid item xs={8} sx={{border: '1px solid blue', padding: '1rem'}}>
+              {/* conditional render => My Feed, Timeline, Global feed */}
+              <Feed />
+            </Grid>
+          </Grid>
+        
+      </Container>
+    </CssBaseline>
+    
   );
 }
 
