@@ -30,9 +30,9 @@ function App() {
               {
                 feedType === 'My' ?  
                 <Feed />
-                : feedType == 'Timeline' ?
+                : feedType === 'Timeline' ?
                 <TimelineFeed />
-                : feedType == 'Global' ?
+                : feedType === 'Global' ?
                 <GlobalFeed />
                 : null
               }

@@ -1,9 +1,10 @@
 
+import Activities from "./Activities";
 
 const GlobalFeed = () => {
 
   return (
-    'Global Feed'
+    <Activities text={ 'Global Feed'}/>
   );
 };
 

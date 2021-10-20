@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextareaAutosize } from '@mui/material';
-
+import Activities from "./Activities";
 
 
 const Feed = () => {
@@ -8,7 +8,7 @@ const Feed = () => {
     <>
       <h2>Feed</h2>
       <TextareaAutosize />
-      <p>My posts are going to go here</p>
+      <Activities text={'My posts are going to go here'} />
     </>
   );
 };

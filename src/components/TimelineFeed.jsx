@@ -1,7 +1,11 @@
+
+import Activities from "./Activities";
+
 const TimelineFeed = () => {
 
   return (
-    'Timeline Feed'
+    <Activities text={ 'Timeline Feed'}/>
+   
   );
 };
 
