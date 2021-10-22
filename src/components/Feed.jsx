@@ -11,7 +11,7 @@ const Feed = ({feedClient}) => {
   // console.log("CLIENT IN FEED", client)
 
   const handleChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setValue(event.target.value)
   };
 
@@ -53,7 +53,7 @@ const Feed = ({feedClient}) => {
         />
         <Button variant="contained" size="large" onClick={createPost} sx={{marginBottom: '2rem'}}>Post</Button>
       </form>
-      <Activities text={'My posts are going to go here'} />
+      <Activities feedClient={feedClient} text={'My posts are going to go here'} />
     </>
   );
 };

@@ -1,0 +1,30 @@
+.card-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(165, 165, 165);
+  margin-bottom: 0.5rem;
+
+  .card-user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-weight: bold;
+    color: #1976d2;
+
+    .name {
+      margin-left: .5rem;
+    }
+  }
+  .card-time {
+    font-size: 0.75rem;
+    
+  }
+}
+.card-text {
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+

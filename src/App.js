@@ -7,14 +7,11 @@ import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import TimelineFeed from './components/TimelineFeed';
 import GlobalFeed from './components/GlobalFeed';
-import './App.css';
+import './App.scss';
 
 function App() {
 
   const api_key = process.env.REACT_APP_API_KEY;
-
-  // console.log("API KEY", api_key);
-  // const api_secret = process.env.REACT_APP_API_SECRET;
   const app_id = process.env.REACT_APP_APP_ID;
 
   const [feedType, setFeedType] = useState('My');
@@ -22,9 +19,7 @@ function App() {
   const [user, setUser] = useState();
   const [feedClient, setFeedClient] = useState({});
 
-  // console.log('FEED TYPE', feedType);
-
-  const client = connect(api_key, token, app_id);
+  const client = connect(api_key, token, app_id); //constructor function
 
   const createFeed = async (event) => {
     event.preventDefault();
@@ -32,20 +27,19 @@ function App() {
       user
     })
 
-    setToken(response.data);
+    setToken(response.data);  
 
     const feed = client.feed('user', user, response.data);
-    // console.log('RESPONSE', response.data);
-    console.log('FEED', feed);
+    // console.log('FEED', feed);
     setFeedClient(feed);
   }
-
-  
 
   const handleCreateUser = (event) => {
     setUser(event.target.value);
     // setFeedType('My');
   }
+
+  
 
   return (
     
