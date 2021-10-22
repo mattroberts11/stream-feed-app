@@ -1,29 +1,23 @@
-import { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 
 
-const TopNav = () => {
+const TopNav = ({createFeed, handleCreateUser}) => {
 
-  const handleChange = () => {
-
-  }
-
-  const handleClick = () => {
-
-  }
 
   return (
     <>
+    <form onSubmit={(event) => createFeed(event)}>
       <TextField
         name="userId" 
-        label="Create Username"  
+        label="Enter a Username"  
         type="text"  
-        onChange={(e) => handleChange(e)} 
-        sx={{marginBottom: '10px'}}
+        onChange={handleCreateUser} 
+        sx={{marginBottom: '1rem'}}
       />
       <div>
-        <Button variant="contained" size="large"  onClick={handleClick}>Join Feed!</Button>
+        <Button variant="contained" size="large"  onClick={createFeed} sx={{marginBottom: '1rem'}}>Create My Feed</Button>
       </div>
+      </form>
     </>
   );
 };

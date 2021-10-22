@@ -11,7 +11,7 @@ const Activities = ({text}) => {
       spacing={2}
     >
       {/* map through here */}
-      <Paper sx={{padding: '0.5rem'}}>
+      <Paper sx={{padding: '0.5rem'}} elevation={3}>
         {text}
       </Paper>
     </Stack>
