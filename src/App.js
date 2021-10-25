@@ -98,7 +98,7 @@ function App() {
                 
                 </Grid>
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
-                  <Paper elevation={3} sx={{padding: '1rem'}}>
+                  <Paper elevation={3} sx={{padding: '0.5rem'}}>
                     <Users timelineClient={timelineClient}/>
                   </Paper>
                 </Grid>

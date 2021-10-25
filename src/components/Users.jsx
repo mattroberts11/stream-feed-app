@@ -15,22 +15,27 @@ const Users = ({timelineClient}) => {
     // setFollow(!follow);
   }
 
-  const handleDelete = async (id) => {
+  const handleUnfollow = async (id) => {
     await timelineClient.unfollow('user', id)
       .then( (r) => console.log('UNFOLLOW RESPONSE', r))
   }
 
 
   return (
-    <div>
-      
-      <Button onClick={() => handleClick('will')}>Will</Button>
-      <Chip label="unfollow" variant="outlined" onDelete={() => handleDelete('will')} >unfollow</Chip>
-      
-     
-      <Button onClick={() => handleClick('katy')}>Katy</Button>
-      <Chip label="unfollow" variant="outlined" onDelete={() => handleDelete('katy')} >unfollow</Chip>
-    </div>
+    <Stack spacing={1}>
+      <div>
+        <Button size="small" variant="outlined" sx={{marginRight: '5px'}} onClick={() => handleClick('will')}>Follow Will</Button>
+        <Chip label="unfollow" variant="outlined" onDelete={() => handleUnfollow('will')} >unfollow</Chip>
+      </div>
+      <div>
+        <Button size="small" variant="outlined" sx={{marginRight: '5px'}} onClick={() => handleClick('katy')}>Follow Katy</Button>
+        <Chip label="unfollow" variant="outlined" onDelete={() => handleUnfollow('katy')} >unfollow</Chip>
+      </div>
+      <div>
+        <Button size="small" variant="outlined" sx={{marginRight: '5px'}} onClick={() => handleClick('matt')}>Follow Matt</Button>
+        <Chip label="unfollow" variant="outlined" onDelete={() => handleUnfollow('matt')} >unfollow</Chip>
+      </div>
+    </Stack>
   )
 }
 
