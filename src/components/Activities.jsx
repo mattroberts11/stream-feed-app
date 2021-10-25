@@ -2,21 +2,9 @@ import {Avatar, Divider, Paper, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 
+const Activities = ({activities, feedClient, text}) => {
 
-const Activities = ({feedClient}) => {
-
-  const [activities, setActivities] = useState();
-
-  const getActivitiesForCurrentUser = () => {
-    feedClient.get({limit:10}).then( r => setActivities(r.results))
-    // feedClient.get({limit:10}).then( r => console.log(r.results))
-    console.log(activities)
-  }
-// console.log('ACTIVITIES FEED CLIENT', feedClient)
-  useEffect(() => {
-    getActivitiesForCurrentUser();
-  },[feedClient])
-
+  
   return (
     <Stack
       direction="column"
@@ -24,7 +12,6 @@ const Activities = ({feedClient}) => {
       alignItems="stretch"
       spacing={2}
     >
-      
       { activities && 
         activities.map( (activity, i) => {
           let currTime = moment(activity.time).local();
@@ -48,9 +35,7 @@ const Activities = ({feedClient}) => {
             </Paper>
           )
         })
-        
       }
-     
     </Stack>
   );
 };

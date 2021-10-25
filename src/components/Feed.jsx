@@ -4,11 +4,11 @@ import { Button, TextField } from '@mui/material';
 import Activities from "./Activities";
 
 
-const Feed = ({feedClient}) => {
+const Feed = ({activities, feedClient}) => {
 
   const [value, setValue] = useState('Create Your Post');
 
-  // console.log("CLIENT IN FEED", client)
+  console.log("CLIENT IN FEED", feedClient)
 
   const handleChange = (event) => {
     // console.log(event.target.value)
@@ -19,14 +19,16 @@ const Feed = ({feedClient}) => {
     setValue('');
   };
 
-  const activity = {
-    'actor': `SU:${feedClient.userId}`,  
-    'verb': 'post',
-    'object': 'Post:11', 
-    'text': value,
-  };
+  
 
   const createPost = async (event) => {
+    const activity = {
+      'actor': `SU:${feedClient.userId}`,  
+      'verb': 'post',
+      'object': 'Post:11', 
+      'text': value,
+      'to': ['global:all'],
+    };
     event.preventDefault();
     await feedClient.addActivity(activity).then( r => console.log('ADD POST R', r));
   }
@@ -53,7 +55,7 @@ const Feed = ({feedClient}) => {
         />
         <Button variant="contained" size="large" onClick={createPost} sx={{marginBottom: '2rem'}}>Post</Button>
       </form>
-      <Activities feedClient={feedClient} text={'My posts are going to go here'} />
+      <Activities feedClient={feedClient} activities={activities} text={'My posts are going to go here'} />
     </>
   );
 };

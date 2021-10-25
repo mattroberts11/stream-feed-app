@@ -10,19 +10,19 @@ const Sidebar = ({feedType, setFeedType}) => {
   
   return (
     <MenuList>
-        <MenuItem onClick={() => setFeedType('My')} >
+        <MenuItem onClick={() => setFeedType('user')} >
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>My Feed</ListItemText>
         </MenuItem >
-        <MenuItem onClick={() => setFeedType('Timeline')}>
+        <MenuItem onClick={() => setFeedType('timeline')}>
           <ListItemIcon>
             <FeedIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>My Timeline</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => setFeedType('Global')}>
+        <MenuItem onClick={() => setFeedType('global')}>
           <ListItemIcon>
             <GlobeIcon fontSize="small" />
           </ListItemIcon>
