@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Chip, Stack } from "@mui/material";
 
 
 const Users = ({timelineClient}) => {
@@ -15,12 +15,22 @@ const Users = ({timelineClient}) => {
     // setFollow(!follow);
   }
 
+  const handleDelete = async (id) => {
+    await timelineClient.unfollow('user', id)
+      .then( (r) => console.log('UNFOLLOW RESPONSE', r))
+  }
+
 
   return (
-    <ul>
-      <li><Button onClick={() => handleClick('will')}>Will</Button></li>
-      <li><Button onClick={() => handleClick('katy')}>Katy</Button></li>
-    </ul>
+    <div>
+      
+      <Button onClick={() => handleClick('will')}>Will</Button>
+      <Chip label="unfollow" variant="outlined" onDelete={() => handleDelete('will')} >unfollow</Chip>
+      
+     
+      <Button onClick={() => handleClick('katy')}>Katy</Button>
+      <Chip label="unfollow" variant="outlined" onDelete={() => handleDelete('katy')} >unfollow</Chip>
+    </div>
   )
 }
 

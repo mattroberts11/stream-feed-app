@@ -1,25 +1,18 @@
 import { useState } from 'react';
-// import { connect } from 'getstream';
 import { Button, TextField } from '@mui/material';
 import Activities from "./Activities";
-
 
 const Feed = ({activities, feedClient}) => {
 
   const [value, setValue] = useState('Create Your Post');
 
-  console.log("CLIENT IN FEED", feedClient)
-
   const handleChange = (event) => {
-    // console.log(event.target.value)
     setValue(event.target.value)
   };
 
   const handleClick = () => {
     setValue('');
   };
-
-  
 
   const createPost = async (event) => {
     const activity = {
@@ -32,8 +25,6 @@ const Feed = ({activities, feedClient}) => {
     event.preventDefault();
     await feedClient.addActivity(activity).then( r => console.log('ADD POST R', r));
   }
-
-  
 
   return (
     <>

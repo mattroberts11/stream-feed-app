@@ -15,11 +15,13 @@ function App() {
   const api_key = process.env.REACT_APP_API_KEY;
   const app_id = process.env.REACT_APP_APP_ID;
 
+  const [activities, setActivities] = useState();
+  const [feedClient, setFeedClient] = useState();
   const [feedType, setFeedType] = useState('user');
+  const [globalClient, setGlobalClient] = useState();
+  const [timelineClient, setTimelineClient] = useState();
   const [token, setToken] = useState(null);
   const [user, setUser] = useState();
-  const [feedClient, setFeedClient] = useState();
-  const [timelineClient, setTimelineClient] = useState();
 
   const client = connect(api_key, token, app_id); //constructor function
 
@@ -30,41 +32,33 @@ function App() {
     })
 
     setToken(response.data);  
-    // feed type can be user, global or timeline
-    // feed([feed group, user id])
+  
     const userFeed = client.feed('user', user, response.data);
     const timelineFeed = client.feed('timeline', user, response.data);
-    console.log('USER FEED', userFeed);
-    console.log('TIMLINE FEED', timelineFeed);
+    const globalFeed = client.feed('global', 'all', response.data);
 
     setFeedClient(userFeed);
     setTimelineClient(timelineFeed);
+    setGlobalClient(globalFeed);
   }
 
-  // const getTimelineFeed = () => {
-  //   const feed = client.feed(feedType, user, token)
-  // }
-
+  
   const handleCreateUser = (event) => {
     setUser(event.target.value);
-    // setFeedType('My');
   }
 
-  const [activities, setActivities] = useState();
+  
 
   const getActivitiesForCurrentUser = useCallback(() => {
     feedClient.get({limit:10}).then( r => setActivities(r.results))
-    // feedClient.get({limit:10}).then( r => console.log(r.results))
-    console.log( 'ACTIVITIES', activities)
   },[activities, feedClient])
-// console.log('ACTIVITIES FEED CLIENT', feedClient)
+
   useEffect(() => {
     if(feedClient) {
       getActivitiesForCurrentUser();
     }
   },[feedClient, feedType])
 
-  console.log('FEED TYPE', feedType)
   return (
     
     <CssBaseline>
@@ -93,13 +87,11 @@ function App() {
                       />
                     : feedType === 'timeline' ?
                     <TimelineFeed 
-                      activities={activities} 
                       timelineClient={timelineClient} 
                     />
                     : feedType === 'global' ?
                     <GlobalFeed 
-                      activities={activities}
-                      feedClient={feedClient} 
+                      globalClient={globalClient} 
                     />
                     : null
                   }

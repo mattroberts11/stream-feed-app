@@ -5,7 +5,7 @@ const TimelineFeed = ({timelineClient}) => {
 
   console.log('TIMELINE FEED', timelineClient);
 
-  const [timelineActivies, setTimelineActivities] = useState(null);
+  const [timelineActivies, setTimelineActivities] = useState([]);
 
   const getTimelineActivities = async () => {
     await timelineClient.get()
@@ -20,9 +20,13 @@ console.log("TIMELINE ACTIVITES", timelineActivies);
 
   return (
     <>
-    <h2>My Timeline</h2>
-    {timelineActivies &&
-      <Activities activities={timelineActivies}/>
+    <h2>{`${timelineClient.userId}'s`} Timeline</h2>
+    
+    {timelineActivies.length > 0
+      ?
+        <Activities activities={timelineActivies}/>
+      :
+        <p>Your timeline is empty becuase you don't follow anyone yet.  Go follow somene now!</p>
     }
     </>
   );
