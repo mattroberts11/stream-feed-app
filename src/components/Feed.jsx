@@ -46,7 +46,8 @@ const Feed = ({activities, feedClient}) => {
         />
         <Button variant="contained" size="large" onClick={createPost} sx={{marginBottom: '2rem'}}>Post</Button>
       </form>
-      <Activities feedClient={feedClient} activities={activities} text={'My posts are going to go here'} />
+      <h2>My Posts</h2>
+      <Activities activities={activities}  client={feedClient} />
     </>
   );
 };

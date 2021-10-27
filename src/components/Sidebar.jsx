@@ -4,11 +4,14 @@ import GlobeIcon from '@mui/icons-material/Language';
 import FeedIcon from '@mui/icons-material/Feed';
 import PersonIcon from '@mui/icons-material/Person';
 
+import Notifications from './Notifications';
+
 
 const Sidebar = ({feedType, setFeedType}) => {
 
   
   return (
+    <>
     <MenuList>
         <MenuItem onClick={() => setFeedType('user')} >
           <ListItemIcon>
@@ -29,6 +32,8 @@ const Sidebar = ({feedType, setFeedType}) => {
           <ListItemText>Global Feed</ListItemText>
         </MenuItem>
     </MenuList>
+    <Notifications />
+    </>
   );
 };
 

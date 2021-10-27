@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { Button, Chip, Stack } from "@mui/material";
 
 
 const Users = ({timelineClient}) => {
 
-  const [follow, setFollow] = useState(false);
+  // const [follow, setFollow] = useState(false);
   // onclick follow or unfollow
   
   

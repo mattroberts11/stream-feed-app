@@ -47,7 +47,7 @@ function App() {
     setUser(event.target.value);
   }
 
-  
+  console.log('FEED TYPE', )
 
   const getActivitiesForCurrentUser = useCallback(() => {
     feedClient.get({limit:10}).then( r => setActivities(r.results))
@@ -83,15 +83,17 @@ function App() {
                     <Feed 
                       activities={activities}
                       feedClient={feedClient} 
-                      // client={client}
+                      feedType={feedType}
                       />
                     : feedType === 'timeline' ?
                     <TimelineFeed 
-                      timelineClient={timelineClient} 
+                      timelineClient={timelineClient}
+                      feedType={feedType}
                     />
                     : feedType === 'global' ?
                     <GlobalFeed 
-                      globalClient={globalClient} 
+                      globalClient={globalClient}
+                      feedType={feedType}
                     />
                     : null
                   }

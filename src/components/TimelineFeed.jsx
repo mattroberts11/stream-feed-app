@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Activities from "./Activities";
 
-const TimelineFeed = ({timelineClient}) => {
+const TimelineFeed = ({timelineClient, feedType}) => {
 
-  console.log('TIMELINE FEED', timelineClient);
+  // console.log('TIMELINE FEED', timelineClient);
 
   const [timelineActivies, setTimelineActivities] = useState([]);
 
@@ -11,7 +11,7 @@ const TimelineFeed = ({timelineClient}) => {
     await timelineClient.get()
       .then( r => setTimelineActivities(r.results))
   }
-console.log("TIMELINE ACTIVITES", timelineActivies);
+// console.log("TIMELINE ACTIVITES", timelineActivies);
   useEffect( ()=> {
     if(timelineClient){
       getTimelineActivities()
@@ -24,7 +24,7 @@ console.log("TIMELINE ACTIVITES", timelineActivies);
     
     {timelineActivies.length > 0
       ?
-        <Activities activities={timelineActivies}/>
+        <Activities activities={timelineActivies} client={timelineClient} feedType={feedType}/>
       :
         <p>Your timeline is empty becuase you don't follow anyone yet.  Go follow somene now!</p>
     }

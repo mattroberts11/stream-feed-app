@@ -21,10 +21,40 @@
     font-size: 0.75rem;
     
   }
+
+  .card-likes {
+    color:#1976d2;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .card-comments-link {
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  
 }
 .card-text {
   padding: 1rem 0;
   font-style: italic;
 }
 
+.card-comments {
+  display: flex;
+  flex-direction: row;
+  padding: .5rem;
+  background-color: #e2e2e2;
+  border-radius: .5rem;
+  border: 1px solid #c9c8c8;
+  margin-left: 10%;
+}
+.show {
+  display:block;
+}
+.hide {
+  display: none;
+}
 
