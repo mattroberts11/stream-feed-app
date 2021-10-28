@@ -16,7 +16,7 @@ const GlobalFeed = ({globalClient, feedType}) => {
     if(globalClient){
       getGlobalActivities()
     }
-  }, [])
+  },[globalClient])
 
   return (
     <>

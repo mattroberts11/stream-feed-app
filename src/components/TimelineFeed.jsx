@@ -3,20 +3,18 @@ import Activities from "./Activities";
 
 const TimelineFeed = ({timelineClient, feedType}) => {
 
-  // console.log('TIMELINE FEED', timelineClient);
-
   const [timelineActivies, setTimelineActivities] = useState([]);
 
   const getTimelineActivities = async () => {
     await timelineClient.get()
       .then( r => setTimelineActivities(r.results))
   }
-// console.log("TIMELINE ACTIVITES", timelineActivies);
+
   useEffect( ()=> {
     if(timelineClient){
       getTimelineActivities()
     }
-  }, [])
+  },[timelineClient])
 
   return (
     <>

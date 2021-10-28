@@ -1,7 +1,7 @@
 import {Avatar, Divider, Paper, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-import { querySelectorAll } from 'dom-helpers';
+// import { querySelectorAll } from 'dom-helpers';
 
 
 const Activities = ({activities, client, feedType}) => {
@@ -9,15 +9,11 @@ const Activities = ({activities, client, feedType}) => {
   const [commentText, setCommentText] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [value, setValue] = useState('Comment on post');
-  const [followers, setFollowers] = useState([]);
 
-  const getFollowers =  async () => {
-     await client.followers({limit: '10'})
-      .then( r => console.log('FOLLOWERS', r))
-      // .then( r => setFollowers(r.results))
-  }
 
-  // console.log("Activities CLIENT", client.followers)
+  
+
+  // console.log("Activities CLIENT", client)
   // console.log("Activities FOLLOWERS", followers)
 
   // const commentDropdowns = querySelectorAll(div.card-comments-container);
@@ -27,8 +23,11 @@ const Activities = ({activities, client, feedType}) => {
   const likePost = async (postId) => {
   //   // console.log('LIKE POSTID', postId)
   //   // console.log("LIKE POST CLIENT", client)
-  //   await client.client.reactions.add('like', postId, {targetFeeds: })
-  //     .then( r => console.log('Like Post Response===', r))
+
+  // use actor id in results array to add username after the notifications 
+  // make sure to get unique
+    await client.client.reactions.add('like', postId, {targetFeeds: ['notifications:matt']})
+      .then( r => console.log('Like Post Response===', r))
   }
 
   const toggleShowInput = () => {
@@ -51,11 +50,11 @@ const Activities = ({activities, client, feedType}) => {
   }
 
   // console.log('ACTIVITIES', activities);
-  useEffect( () => {
-    if(feedType === 'timeline'){
-      getFollowers();
-    }
-  }, [feedType])
+  // useEffect( () => {
+  //   if(feedType === 'timeline'){
+  //     getFollowers();
+  //   }
+  // }, [feedType])
 
   return (
     <Stack

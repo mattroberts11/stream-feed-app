@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'getstream';
 import axios from 'axios';
 import { Container, CssBaseline, Divider, Grid, Paper } from '@mui/material';
@@ -18,9 +18,10 @@ function App() {
   const [activities, setActivities] = useState();
   const [feedClient, setFeedClient] = useState();
   const [feedType, setFeedType] = useState('user');
+  const [followers, setFollowers] = useState([]);
   const [globalClient, setGlobalClient] = useState();
   const [timelineClient, setTimelineClient] = useState();
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState();
   const [user, setUser] = useState();
 
   const client = connect(api_key, token, app_id); //constructor function
@@ -42,22 +43,26 @@ function App() {
     setGlobalClient(globalFeed);
   }
 
-  
   const handleCreateUser = (event) => {
     setUser(event.target.value);
   }
 
-  console.log('FEED TYPE', )
-
-  const getActivitiesForCurrentUser = useCallback(() => {
+  const getActivitiesForCurrentUser = () => {
     feedClient.get({limit:10}).then( r => setActivities(r.results))
-  },[activities, feedClient])
+  }
+
+  const getFollowers =  async () => {
+    await feedClient.followers({limit: '10'})
+    //  .then( r => console.log('FOLLOWERS', r))
+     .then( r => setFollowers(r.results))
+ }
 
   useEffect(() => {
     if(feedClient) {
       getActivitiesForCurrentUser();
+      getFollowers();
     }
-  },[feedClient, feedType])
+  },[feedClient])
 
   return (
     
@@ -101,7 +106,7 @@ function App() {
                 </Grid>
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
                   <Paper elevation={3} sx={{padding: '0.5rem'}}>
-                    <Users timelineClient={timelineClient}/>
+                    <Users timelineClient={timelineClient} followers={followers} />
                   </Paper>
                 </Grid>
                 </>
