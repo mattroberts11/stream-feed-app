@@ -4,14 +4,13 @@ import moment from 'moment';
 // import { querySelectorAll } from 'dom-helpers';
 
 
-const Activities = ({activities, client, feedType}) => {
+const Activities = ({activities, client, feedType, followers}) => {
 
   const [commentText, setCommentText] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [value, setValue] = useState('Comment on post');
 
-
-  
+// console.log("followerId", followerId)
 
   // console.log("Activities CLIENT", client)
   // console.log("Activities FOLLOWERS", followers)

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Button, Chip, Stack } from "@mui/material";
 
-const Users = ({timelineClient, followers}) => {
-
-  const [followerId, setFollowerId] = useState([]);
+const Users = ({timelineClient, followerId}) => {
 
   const handleFollow = async (id) => {
     await timelineClient.follow('user', id)
@@ -15,21 +13,6 @@ const Users = ({timelineClient, followers}) => {
       .then( (r) => console.log('UNFOLLOW RESPONSE', r))
   }
   
-  const getFollowersId = () => {
-    let fId = []
-    followers.forEach( (follower) => {
-      console.log('FOLLOWER', follower)
-      fId.push(follower.feed_id.replace('timeline:', ''));
-    })
-    setFollowerId(fId);
-  }
-
-  useEffect( () => {
-    if(followers){
-      getFollowersId()
-    }
-  }, [])
-console.log("followerId", followerId)
   return (
     <>
     <Stack spacing={1}>
@@ -46,9 +29,9 @@ console.log("followerId", followerId)
         <Chip label="unfollow" variant="outlined" onDelete={() => handleUnfollow('matt')} />
       </Box>
     </Stack>
-    {followers.length ?
+    {followerId.length ?
       <>
-      <h2>{`You have ${followers.length} followers`}</h2>
+      <h2>{`You have ${followerId.length} followers`}</h2>
       <ul>
         {followerId &&
         followerId.map( (id, i) => (
@@ -57,7 +40,7 @@ console.log("followerId", followerId)
         }
       </ul>
       </>
-      : "You don't have any followers"
+      : <p>You don't have any followers</p>
     }
     </>
   )

@@ -19,6 +19,7 @@ function App() {
   const [feedClient, setFeedClient] = useState();
   const [feedType, setFeedType] = useState('user');
   const [followers, setFollowers] = useState([]);
+  const [followerId, setFollowerId] = useState([]);
   const [globalClient, setGlobalClient] = useState();
   const [timelineClient, setTimelineClient] = useState();
   const [token, setToken] = useState();
@@ -55,12 +56,29 @@ function App() {
     await feedClient.followers({limit: '10'})
     //  .then( r => console.log('FOLLOWERS', r))
      .then( r => setFollowers(r.results))
+    //  .finally(getFollowersId())
  }
+
+  const getFollowersId = () => {
+    let fId = []
+    followers.forEach( (follower) => {
+      console.log('FOLLOWER', follower)
+      fId.push(follower.feed_id.replace('timeline:', ''));
+    })
+    setFollowerId(fId);
+  }
+
+  useEffect( () => {
+    if(followers){
+      getFollowersId();
+    }
+  }, [followers])
 
   useEffect(() => {
     if(feedClient) {
       getActivitiesForCurrentUser();
       getFollowers();
+      // getFollowersId();
     }
   },[feedClient])
 
@@ -89,16 +107,21 @@ function App() {
                       activities={activities}
                       feedClient={feedClient} 
                       feedType={feedType}
-                      />
+                      user={user}
+                    />
                     : feedType === 'timeline' ?
                     <TimelineFeed 
                       timelineClient={timelineClient}
                       feedType={feedType}
+                      followers={followers}
+                      user={user}
                     />
                     : feedType === 'global' ?
                     <GlobalFeed 
                       globalClient={globalClient}
                       feedType={feedType}
+                      followers={followers}
+                      user={user}
                     />
                     : null
                   }
@@ -106,7 +129,7 @@ function App() {
                 </Grid>
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
                   <Paper elevation={3} sx={{padding: '0.5rem'}}>
-                    <Users timelineClient={timelineClient} followers={followers} />
+                    <Users timelineClient={timelineClient} followerId={followerId} />
                   </Paper>
                 </Grid>
                 </>

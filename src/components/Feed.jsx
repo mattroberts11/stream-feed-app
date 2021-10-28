@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import Activities from "./Activities";
 
-const Feed = ({activities, feedClient}) => {
+const Feed = ({activities, feedClient, user}) => {
 
   const [value, setValue] = useState('Create Your Post');
 
@@ -47,7 +47,10 @@ const Feed = ({activities, feedClient}) => {
         <Button variant="contained" size="large" onClick={createPost} sx={{marginBottom: '2rem'}}>Post</Button>
       </form>
       <h2>My Posts</h2>
-      <Activities activities={activities}  client={feedClient} />
+      <Activities 
+        activities={activities}  
+        client={feedClient} 
+      />
     </>
   );
 };
