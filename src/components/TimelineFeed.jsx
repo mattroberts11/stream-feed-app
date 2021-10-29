@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Activities from "./Activities";
 
-const TimelineFeed = ({timelineClient, feedType, followers, user}) => {
+const TimelineFeed = ({timelineClient, feedType, followerId, token, user}) => {
 
   const [timelineActivies, setTimelineActivities] = useState([]);
 
@@ -26,7 +26,8 @@ const TimelineFeed = ({timelineClient, feedType, followers, user}) => {
           activities={timelineActivies} 
           client={timelineClient} 
           feedType={feedType}
-          followers={followers}
+          followerId={followerId}
+          token={token}
         />
       :
         <p>Your timeline is empty becuase you don't follow anyone yet.  Go follow somene now!</p>

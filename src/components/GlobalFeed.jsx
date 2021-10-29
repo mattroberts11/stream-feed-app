@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Activities from "./Activities";
 
-const GlobalFeed = ({globalClient, feedType, followers, user}) => {
+const GlobalFeed = ({globalClient, feedType, followerId, token, user}) => {
 
   // console.log('GLOBAL FEED', globalClient);
 
@@ -26,7 +26,8 @@ const GlobalFeed = ({globalClient, feedType, followers, user}) => {
           activities={globalActivities} 
           client={globalClient} 
           feedType={feedType} 
-          followers={followers}
+          followerId={followerId}
+          token={token}
         />
       }
     </>

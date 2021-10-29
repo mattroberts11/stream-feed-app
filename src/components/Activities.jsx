@@ -1,23 +1,34 @@
 import {Avatar, Divider, Paper, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-// import { querySelectorAll } from 'dom-helpers';
+import { connect } from 'getstream';
 
 
-const Activities = ({activities, client, feedType, followers}) => {
+const Activities = ({activities, client, feedType, followerId, token}) => {
 
   const [commentText, setCommentText] = useState('');
   const [showInput, setShowInput] = useState(false);
+  const [likeTargetFeeds, setLikeTargetFeeds] = useState([]);
   const [value, setValue] = useState('Comment on post');
 
 // console.log("followerId", followerId)
 
-  // console.log("Activities CLIENT", client)
-  // console.log("Activities FOLLOWERS", followers)
+  const api_key = process.env.REACT_APP_API_KEY;
+  const app_id = process.env.REACT_APP_APP_ID;
+
+  const activitiesClient = connect(api_key, token, app_id);
 
   // const commentDropdowns = querySelectorAll(div.card-comments-container);
   // next add event listener to each one for click
   // when clicked add class show
+
+  const createTargetFeedsObj = () => {
+    let targetedFeeds = [];
+    followerId.forEach( follower => {
+      targetedFeeds.push(`notifications:${follower}`)
+    })
+    setLikeTargetFeeds(targetedFeeds);
+  }
 
   const likePost = async (postId) => {
   //   // console.log('LIKE POSTID', postId)
@@ -25,7 +36,7 @@ const Activities = ({activities, client, feedType, followers}) => {
 
   // use actor id in results array to add username after the notifications 
   // make sure to get unique
-    await client.client.reactions.add('like', postId, {targetFeeds: ['notifications:matt']})
+    await client.client.reactions.add('like', postId, {targetFeeds: likeTargetFeeds})
       .then( r => console.log('Like Post Response===', r))
   }
 
@@ -45,15 +56,16 @@ const Activities = ({activities, client, feedType, followers}) => {
     await client.client.add('comment', postId, {text: value})
       .then( r => console.log('Add Comment Response', r))
       .finally(setValue('Comment on post'))
-    // then setValue('Comment on post')
-  }
+    }
 
-  // console.log('ACTIVITIES', activities);
-  // useEffect( () => {
-  //   if(feedType === 'timeline'){
-  //     getFollowers();
-  //   }
-  // }, [feedType])
+  // console.log('target feeds', likeTargetFeeds);
+  useEffect( () => {
+    setLikeTargetFeeds([]);
+    if((feedType === 'timeline' || feedType === 'global') && followerId){
+      
+      createTargetFeedsObj();
+    }
+  }, [])
 
   return (
     <Stack

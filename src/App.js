@@ -21,6 +21,7 @@ function App() {
   const [followers, setFollowers] = useState([]);
   const [followerId, setFollowerId] = useState([]);
   const [globalClient, setGlobalClient] = useState();
+  const [notificationsClient, setNotificationsClient] = useState();
   const [timelineClient, setTimelineClient] = useState();
   const [token, setToken] = useState();
   const [user, setUser] = useState();
@@ -38,12 +39,14 @@ function App() {
     const userFeed = client.feed('user', user, response.data);
     const timelineFeed = client.feed('timeline', user, response.data);
     const globalFeed = client.feed('global', 'all', response.data);
+    const notificationsFeed = client.feed('notifications', user, response.data);
 
     setFeedClient(userFeed);
     setTimelineClient(timelineFeed);
     setGlobalClient(globalFeed);
+    setNotificationsClient(notificationsFeed);
   }
-
+// console.log('NOTIFICATIONS CLIENT', notificationsClient);
   const handleCreateUser = (event) => {
     setUser(event.target.value);
   }
@@ -54,22 +57,31 @@ function App() {
 
   const getFollowers =  async () => {
     await feedClient.followers({limit: '10'})
-    //  .then( r => console.log('FOLLOWERS', r))
      .then( r => setFollowers(r.results))
-    //  .finally(getFollowersId())
  }
 
   const getFollowersId = () => {
     let fId = []
     followers.forEach( (follower) => {
-      console.log('FOLLOWER', follower)
       fId.push(follower.feed_id.replace('timeline:', ''));
     })
     setFollowerId(fId);
   }
 
+  const getReactions = () => {
+    timelineClient.get({reactions: {own: true, recent: true, counts: true}})
+      .then( r => console.log('Timeline Reactions', r))
+  }
+  
+  useEffect( () => {
+    if(timelineClient){
+      getReactions();
+    }
+  }, [timelineClient])
+
   useEffect( () => {
     if(followers){
+      setFollowerId([]);
       getFollowersId();
     }
   }, [followers])
@@ -78,7 +90,7 @@ function App() {
     if(feedClient) {
       getActivitiesForCurrentUser();
       getFollowers();
-      // getFollowersId();
+      
     }
   },[feedClient])
 
@@ -101,7 +113,7 @@ function App() {
                 </Grid>
                 <Grid item xs={6} sx={{padding: '1rem'}}>
                   
-                  {
+                  { // TODO: consolidate all the feed components into one
                     feedType === 'user' ?  
                     <Feed 
                       activities={activities}
@@ -113,14 +125,16 @@ function App() {
                     <TimelineFeed 
                       timelineClient={timelineClient}
                       feedType={feedType}
-                      followers={followers}
+                      followerId={followerId}
+                      token={token}
                       user={user}
                     />
                     : feedType === 'global' ?
                     <GlobalFeed 
                       globalClient={globalClient}
                       feedType={feedType}
-                      followers={followers}
+                      followerId={followerId}
+                      token={token}
                       user={user}
                     />
                     : null
