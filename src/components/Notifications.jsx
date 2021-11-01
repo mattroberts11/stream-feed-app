@@ -1,7 +1,12 @@
 
 
 
-const Notifications = ()=> {
+const Notifications = ({notificationsClient})=> {
+
+  // const getNotifications() => {
+
+  // }
+
   return (
     <h4>Notifications</h4>
   )

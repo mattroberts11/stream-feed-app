@@ -6,7 +6,7 @@ const TimelineFeed = ({timelineClient, feedType, followerId, token, user}) => {
   const [timelineActivies, setTimelineActivities] = useState([]);
 
   const getTimelineActivities = async () => {
-    await timelineClient.get()
+    await timelineClient.get({reactions: {own: true, recent: true, counts: true}})
       .then( r => setTimelineActivities(r.results))
   }
 
@@ -15,7 +15,7 @@ const TimelineFeed = ({timelineClient, feedType, followerId, token, user}) => {
       getTimelineActivities()
     }
   },[timelineClient])
-
+// console.log('TIMELINE ACTIVITIES', timelineActivies);
   return (
     <>
     <h2>{`${timelineClient.userId}'s`} Timeline</h2>

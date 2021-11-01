@@ -3,6 +3,7 @@ import { connect } from 'getstream';
 import axios from 'axios';
 import { Container, CssBaseline, Divider, Grid, Paper } from '@mui/material';
 import Feed from './components/Feed';
+import Notifications from './components/Notifications';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
 import TimelineFeed from './components/TimelineFeed';
@@ -35,11 +36,13 @@ function App() {
     })
 
     setToken(response.data);  
+
+    const token = response.data;
   
-    const userFeed = client.feed('user', user, response.data);
-    const timelineFeed = client.feed('timeline', user, response.data);
-    const globalFeed = client.feed('global', 'all', response.data);
-    const notificationsFeed = client.feed('notifications', user, response.data);
+    const userFeed = client.feed('user', user, token);
+    const timelineFeed = client.feed('timeline', user, token);
+    const globalFeed = client.feed('global', 'all', token);
+    const notificationsFeed = client.feed('notifications', user, token);
 
     setFeedClient(userFeed);
     setTimelineClient(timelineFeed);
@@ -52,7 +55,7 @@ function App() {
   }
 
   const getActivitiesForCurrentUser = () => {
-    feedClient.get({limit:10}).then( r => setActivities(r.results))
+    feedClient.get({limit:10, reactions: {own: true, recent: true, counts: true}}).then( r => setActivities(r.results))
   }
 
   const getFollowers =  async () => {
@@ -68,16 +71,16 @@ function App() {
     setFollowerId(fId);
   }
 
-  const getReactions = () => {
-    timelineClient.get({reactions: {own: true, recent: true, counts: true}})
-      .then( r => console.log('Timeline Reactions', r))
-  }
-  
-  useEffect( () => {
-    if(timelineClient){
-      getReactions();
-    }
-  }, [timelineClient])
+  // const getReactions = () => {
+  //   timelineClient.get({reactions: {own: true, recent: true, counts: true}})
+  //     .then( r => console.log('Timeline Reactions', r))
+  // }
+
+  // useEffect( () => {
+  //   if(timelineClient){
+  //     getReactions();
+  //   }
+  // }, [timelineClient])
 
   useEffect( () => {
     if(followers){
@@ -109,6 +112,7 @@ function App() {
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
                   <Paper  elevation={3}>
                     <Sidebar feedType={feedType} setFeedType={setFeedType} />
+                    <Notifications notificationsClient={notificationsClient} />
                   </Paper>
                 </Grid>
                 <Grid item xs={6} sx={{padding: '1rem'}}>
@@ -144,6 +148,7 @@ function App() {
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
                   <Paper elevation={3} sx={{padding: '0.5rem'}}>
                     <Users timelineClient={timelineClient} followerId={followerId} />
+                    
                   </Paper>
                 </Grid>
                 </>

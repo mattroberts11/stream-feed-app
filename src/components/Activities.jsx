@@ -11,12 +11,14 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
   const [likeTargetFeeds, setLikeTargetFeeds] = useState([]);
   const [value, setValue] = useState('Comment on post');
 
-// console.log("followerId", followerId)
+// console.log("ACTIVITIES FEED TYPE", feedType);
+// console.log("ACTIVITIES CLIENT", client);
+console.log("ACTIVITIES", activities);
 
-  const api_key = process.env.REACT_APP_API_KEY;
-  const app_id = process.env.REACT_APP_APP_ID;
+  // const api_key = process.env.REACT_APP_API_KEY;
+  // const app_id = process.env.REACT_APP_APP_ID;
 
-  const activitiesClient = connect(api_key, token, app_id);
+  // const activitiesClient = connect(api_key, token, app_id);
 
   // const commentDropdowns = querySelectorAll(div.card-comments-container);
   // next add event listener to each one for click
@@ -33,9 +35,6 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
   const likePost = async (postId) => {
   //   // console.log('LIKE POSTID', postId)
   //   // console.log("LIKE POST CLIENT", client)
-
-  // use actor id in results array to add username after the notifications 
-  // make sure to get unique
     await client.client.reactions.add('like', postId, {targetFeeds: likeTargetFeeds})
       .then( r => console.log('Like Post Response===', r))
   }
@@ -47,6 +46,7 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
   const handleChange = (event) => {
     setValue(event.target.value);
   }
+
   const handleCommentFormClick = () => {
     setValue('');
   }
@@ -66,7 +66,7 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
       createTargetFeedsObj();
     }
   }, [])
-
+// activites.ownReactions has a like
   return (
     <Stack
       direction="column"
@@ -78,6 +78,7 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
         activities.map( (activity, i) => {
           let currTime = moment(activity.time).local();
           return (
+            <>
             <Paper 
               key={`activity-${activity.id}`} 
               sx={{padding: '0.5rem'}} 
@@ -96,7 +97,12 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
                 {activity.text}
               </div>
               <div className='card-row'>
-                <div className='card-likes' onClick={() => likePost(activity.id)}>Likes</div>
+              {activity.own_reactions?.like 
+                ?
+                  <div className='card-likes' onClick={() => likePost(activity.id)}>Likes</div> 
+                :
+                  <div className='card-likes liked'>Liked</div>
+              }
                 <div className={`card-comments-link`} data-id={activity.id} onClick={toggleShowInput}>Comments</div>
               </div>
               <div id={`dropdown-${i}`} className={`card-comments-container ${showInput ? 'show' : 'hide'}`}>
@@ -120,6 +126,7 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
                 </div>
               </div>
             </Paper>
+            </>
           )
         })
       }
