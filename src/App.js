@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'getstream';
 import axios from 'axios';
 import { Container, CssBaseline, Divider, Grid, Paper } from '@mui/material';
-import Feed from './components/Feed';
+import PostForm from './components/PostForm';
 import Notifications from './components/Notifications';
 import Sidebar from './components/Sidebar';
 import TopNav from './components/TopNav';
@@ -10,6 +10,7 @@ import TimelineFeed from './components/TimelineFeed';
 import GlobalFeed from './components/GlobalFeed';
 import Users from './components/Users';
 import './App.scss';
+import Activities from './components/Activities';
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
       user
     })
 
-    setToken(response.data);  
+    setToken(response.data); 
 
     const token = response.data;
   
@@ -104,7 +105,7 @@ function App() {
         <Paper variant="outlined">
           <Grid container sx={{marginTop: '1rem', padding: '1rem'}}>
             <Grid item xs={12} sx={{padding: '1rem'}}> 
-              <TopNav createFeed={createFeed} handleCreateUser={handleCreateUser} setToken={setToken}/>
+              <TopNav createFeed={createFeed} handleCreateUser={handleCreateUser} />
               <Divider />
             </Grid>
             { feedClient?.userId ?
@@ -119,12 +120,20 @@ function App() {
                   
                   { // TODO: consolidate all the feed components into one
                     feedType === 'user' ?  
-                    <Feed 
-                      activities={activities}
-                      feedClient={feedClient} 
-                      feedType={feedType}
-                      user={user}
-                    />
+                      <>
+                        <PostForm 
+                          // activities={activities}
+                          feedClient={feedClient} 
+                          feedType={feedType}
+                          user={user}
+                        />
+                        <Activities
+                          activities={activities} 
+                          client={feedClient} 
+                          feedType={feedType}
+                          followerId={followerId}
+                        />
+                      </>
                     : feedType === 'timeline' ?
                     <TimelineFeed 
                       timelineClient={timelineClient}
@@ -143,7 +152,14 @@ function App() {
                     />
                     : null
                   }
-                
+                  
+                 <TimelineFeed 
+                    timelineClient={timelineClient}
+                    feedType={feedType}
+                    followerId={followerId}
+                    token={token}
+                    user={user}
+                  />
                 </Grid>
                 <Grid item xs={3} sx={{marginTop: '1rem'}}>
                   <Paper elevation={3} sx={{padding: '0.5rem'}}>

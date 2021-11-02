@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import Activities from "./Activities";
+// import Activities from "./Activities";
 
-const Feed = ({activities, feedClient, user}) => {
+const PostForm = ({activities, feedClient, feedType, user}) => {
 
   const [value, setValue] = useState('Create Your Post');
 
@@ -46,13 +46,9 @@ const Feed = ({activities, feedClient, user}) => {
         />
         <Button variant="contained" size="large" onClick={createPost} sx={{marginBottom: '2rem'}}>Post</Button>
       </form>
-      <h2>My Posts</h2>
-      <Activities 
-        activities={activities}  
-        client={feedClient} 
-      />
+      
     </>
   );
 };
 
-export default Feed;
+export default PostForm;

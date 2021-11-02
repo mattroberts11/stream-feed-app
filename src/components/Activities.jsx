@@ -4,7 +4,7 @@ import moment from 'moment';
 import { connect } from 'getstream';
 
 
-const Activities = ({activities, client, feedType, followerId, token}) => {
+const Activities = ({activities, client, feedType, followerId}) => {
 
   const [commentText, setCommentText] = useState('');
   const [showInput, setShowInput] = useState(false);
