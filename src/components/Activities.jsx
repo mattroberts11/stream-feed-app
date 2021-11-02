@@ -99,7 +99,7 @@ console.log("ACTIVITIES", activities);
               <div className='card-row'>
               {activity.own_reactions?.like 
                 ?
-                  <div className='card-likes' onClick={() => likePost(activity.id)}>Likes</div> 
+                  <div className='card-likes' onClick={() => likePost(activity.id)}>Like</div> 
                 :
                   <div className='card-likes liked'>Liked</div>
               }

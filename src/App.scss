@@ -28,8 +28,11 @@
       cursor: pointer;
     }
 
-    .liked {
+    &.liked {
       color: grey;
+      &:hover {
+        cursor: default;
+      }
     }
   }
   .card-comments-link {
