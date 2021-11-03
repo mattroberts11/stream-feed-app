@@ -1,4 +1,4 @@
-import {Avatar, Divider, Paper, Stack, TextField } from '@mui/material';
+import {Avatar, Divider, Input, Paper, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { connect } from 'getstream';
@@ -61,8 +61,8 @@ console.log("ACTIVITIES", activities);
   // console.log('target feeds', likeTargetFeeds);
   useEffect( () => {
     setLikeTargetFeeds([]);
+    
     if((feedType === 'timeline' || feedType === 'global') && followerId){
-      
       createTargetFeedsObj();
     }
   }, [])
@@ -103,14 +103,16 @@ console.log("ACTIVITIES", activities);
                 :
                   <div className='card-likes liked'>Liked</div>
               }
-                <div className={`card-comments-link`} data-id={activity.id} onClick={toggleShowInput}>Comments</div>
+                {/* <div className={`card-comments-link`} data-id={activity.id} onClick={toggleShowInput}>Comments</div> */}
+                <div className={`card-comments-link`} data-id={activity.id} >Comments</div>
               </div>
-              <div id={`dropdown-${i}`} className={`card-comments-container ${showInput ? 'show' : 'hide'}`}>
+              {/* <div id={`dropdown-${i}`} className={`card-comments-container ${showInput ? 'show' : 'hide'}`}> */}
+              <div id={`dropdown-${i}`} className={`card-comments-container`}>
                 <Divider sx={{marginBottom: '.5rem'}} />
                 <form onSubmit={(event) => commentOnPost(event, activity.id)}>
                   <TextField 
                     id={`input-${i}`}
-                    
+                    className='comment-field'
                     variant='outlined' 
                     fullWidth 
                     label='Add A Comment'

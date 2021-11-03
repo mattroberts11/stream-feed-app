@@ -83,6 +83,12 @@ function App() {
   // }, [timelineClient])
 
   useEffect( () => {
+    const commentContainer = document.querySelector("#feed-container");
+    const commentForms = commentContainer.querySelectorAll("input");
+    // console.log("commentForms", commentForms);
+  })
+
+  useEffect( () => {
     if(followers){
       setFollowerId([]);
       getFollowersId();
@@ -115,7 +121,7 @@ function App() {
                     <Notifications notificationsClient={notificationsClient} />
                   </Paper>
                 </Grid>
-                <Grid item xs={6} sx={{padding: '1rem'}}>
+                <Grid item xs={6} sx={{padding: '1rem'}} id="feed-container">
                   
                   { // TODO: consolidate all the feed components into one
                     feedType === 'user' ?  
