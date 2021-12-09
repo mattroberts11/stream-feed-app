@@ -71,6 +71,10 @@ function App() {
     setFollowerId(fId);
   }
 
+  const deleteActivity = async () => {
+    globalClient.removeActivity("ded89d49-38fc-11ec-b105-12e0c51dd22e")
+      .then( r => console.log("DELETED", r));
+  }
   // const getReactions = () => {
   //   timelineClient.get({reactions: {own: true, recent: true, counts: true}})
   //     .then( r => console.log('Timeline Reactions', r))
@@ -82,16 +86,13 @@ function App() {
   //   }
   // }, [timelineClient])
 
-  useEffect( () => {
-    const commentContainer = document.querySelector("#feed-container");
-    const commentForms = commentContainer.querySelectorAll("input");
-    // console.log("commentForms", commentForms);
-  })
+  
 
   useEffect( () => {
     if(followers){
       setFollowerId([]);
       getFollowersId();
+      console.log("USER==", user);
     }
   }, [followers])
 
@@ -99,10 +100,10 @@ function App() {
     if(feedClient) {
       getActivitiesForCurrentUser();
       getFollowers();
-      
+      // deleteActivity();
     }
   },[feedClient])
-
+// console.log('ACTIVITIES', activities)
   return (
     
     <CssBaseline>

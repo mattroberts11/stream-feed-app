@@ -17,8 +17,6 @@ app.use(express.json());
 
 const serverClient = connect(api_key, api_secret, app_id);
 
-
-
 app.post('/token', async (req, res) => {
   // create token here with userID from the front end req.body
   console.log('TOKEN REQ.BODY', req.body);

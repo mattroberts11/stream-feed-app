@@ -11,6 +11,7 @@ const Activities = ({activities, client, feedType, followerId, token}) => {
   const [likeTargetFeeds, setLikeTargetFeeds] = useState([]);
   const [value, setValue] = useState('Comment on post');
 
+
 // console.log("ACTIVITIES FEED TYPE", feedType);
 // console.log("ACTIVITIES CLIENT", client);
 console.log("ACTIVITIES", activities);
@@ -43,7 +44,13 @@ console.log("ACTIVITIES", activities);
     setShowInput(!showInput);
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event, id) => {
+    console.log('EVENT', event);
+    console.log('id', id);
+    console.log('TARGET VALUE', event.target.value);
+    // const inputValue = document.querySelector(id).value;
+    console.log('QUERY SELECTOR', document.querySelector(id));
+    // console.log('INPUT VALUE', inputValue);
     setValue(event.target.value);
   }
 
@@ -53,9 +60,10 @@ console.log("ACTIVITIES", activities);
 
   const commentOnPost = async (event, postId) => {
     event.preventDefault();
-    await client.client.add('comment', postId, {text: value})
-      .then( r => console.log('Add Comment Response', r))
-      .finally(setValue('Comment on post'))
+    console.log('COMMENT FORM TEXT', value);
+    // await client.client.add('comment', postId, {text: event.target.value})
+    //   .then( r => console.log('Add Comment Response', r))
+      // .finally(setValue('Comment on post'))
     }
 
   // console.log('target feeds', likeTargetFeeds);
@@ -66,6 +74,19 @@ console.log("ACTIVITIES", activities);
       createTargetFeedsObj();
     }
   }, [])
+
+  // useEffect( () => {
+  //   const commentContainer = document.querySelector("#feed-container");
+  //   const commentForms = commentContainer.querySelectorAll("input");
+      
+  //   console.log("commentForms", commentForms);
+
+  //   commentForms.forEach( (item, i) => {
+  //     item.addEventListener('click', event => {
+  //       handleChange(event);
+  //     })
+  //   })
+  // })
 // activites.ownReactions has a like
   return (
     <Stack
@@ -110,16 +131,23 @@ console.log("ACTIVITIES", activities);
               <div id={`dropdown-${i}`} className={`card-comments-container`}>
                 <Divider sx={{marginBottom: '.5rem'}} />
                 <form onSubmit={(event) => commentOnPost(event, activity.id)}>
-                  <TextField 
+                  {/* <TextField 
                     id={`input-${i}`}
                     className='comment-field'
                     variant='outlined' 
                     fullWidth 
                     label='Add A Comment'
-                    onChange={handleChange}
+                    onChange={ (event) => handleChange(event, `input-${i}`)}
                     onClick={handleCommentFormClick}
-                    value={value}
+                    // value={value}
                     sx={{marginBottom: '.5rem'}}
+                  /> */}
+                  <input  
+                    type="text" id={`input-${i}`} 
+                    onChange={ (event) => handleChange(event, `input-${i}`)}
+                    onClick={() => this.value=''}
+                    value="Create a post"
+                    // ref={`input-${i}`} 
                   />
                 </form>
                 <div className={`card-comments`}>
